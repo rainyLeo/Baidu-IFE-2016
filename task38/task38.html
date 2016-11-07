@@ -1,0 +1,88 @@
+<!-- 任务描述
+http://ife.baidu.com/task/detail?taskId=38
+参考下方设计图，实现一个支持列排序的表格组件
+提供生成表格的接口，表格中的数据，表格样式尽量低耦合
+可以配置对哪些列支持排序功能，并在表头进行排序按钮的显示，图中的样式为示意参考，可自行设定样式及交互方式
+提供点击排序按钮后的响应接口，并提供默认的排序方法，当提供的接口没有具体实现时，按默认的排序方法进行排序操作，并更新表格中的数据显示。 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>task38</title>
+  <style media="screen">
+    table, td {
+      border: 1px solid #999;
+      border-collapse: collapse;
+    }
+    thead {
+      color: #ddd;
+      background: #333;
+    }
+    thead, td {
+      text-align: center;
+      font-family: Helvetica;
+      width: 110px;
+      padding: 3px;
+      height: 30px;
+      position: relative;
+    }
+    td span.arrow-down {
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      top: 5px;
+      margin-left: 25px;
+      border-top: 7px solid #fff;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+    }
+    td span.arrow-up {
+      position: absolute;
+      cursor: pointer;
+      right: 24px;
+      top: 7px;
+      display: inline-block;
+      border-bottom: 7px solid #fff;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+    }
+
+  </style>
+</head>
+<body>
+  <table>
+    <thead>
+      <td>姓名</td>
+      <td>语文<span class="arrow-up" id="arrow-up-1"></span><span class="arrow-down"></span></td>
+      <td>数学<span class="arrow-up"></span><span class="arrow-down"></span></td>
+      <td>英语<span class="arrow-up"></span><span class="arrow-down"></span></td>
+      <td>总分<span class="arrow-up"></span><span class="arrow-down"></span></td>
+    </thead>
+    <tbody id="tr-area">
+      <tr>
+        <td>小明</td>
+        <td>80</td>
+        <td>90</td>
+        <td>70</td>
+        <td>240</td>
+      </tr>
+      <tr>
+        <td>小红</td>
+        <td>90</td>
+        <td>60</td>
+        <td>90</td>
+        <td>260</td>
+      </tr>
+      <tr>
+        <td>小亮</td>
+        <td>60</td>
+        <td>100</td>
+        <td>80</td>
+        <td>230</td>
+      </tr>
+    </tbody>
+  </table>
+<script src="task38.js">
+</script>
+</body>
+</html>

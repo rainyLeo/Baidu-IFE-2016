@@ -1,0 +1,38 @@
+<!-- 任务描述
+
+如图，模拟一个队列，队列的每个元素是一个数字，初始队列为空
+有一个input输入框，以及4个操作按钮
+点击"左侧入"，将input中输入的数字从左侧插入队列中；
+点击"右侧入"，将input中输入的数字从右侧插入队列中；
+点击"左侧出"，读取并删除队列左侧第一个元素，并弹窗显示元素中数值；
+点击"右侧出"，读取并删除队列又侧第一个元素，并弹窗显示元素中数值；
+点击队列中任何一个元素，则该元素会被从队列中删除 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.box {
+			color: #FFF;
+			background-color: #F41;
+			font-size: 2.6em;
+			float: left;
+			margin: 10px 3px;
+			padding: 22px;
+		}
+	</style>
+</head>
+<body>
+<input type="text" id='text'>
+
+<button id='leftIn'>左侧入</button>
+<button id='rightIn'>右侧入</button>
+<button id='leftOut'>左侧出</button>
+<button id='rightOut'>右侧出</button>
+<div id='boxarea'></div>
+<script src='task18.js'></script>
+</body>
+</html>

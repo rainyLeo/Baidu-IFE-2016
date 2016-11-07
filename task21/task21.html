@@ -1,0 +1,108 @@
+<!-- 任务描述
+
+基于任务20，将任务20的代码进行抽象、封装，然后在此基础上实现如图中的两个需求：Tag输入和兴趣爱好输入
+如示例图上方，实现一个tag输入框
+要求遇到用户输入空格，逗号，回车时，都自动把当前输入的内容作为一个tag放在输入框下面。
+Tag不能有重复的，遇到重复输入的Tag，自动忽视。
+每个Tag请做trim处理
+最多允许10个Tag，多于10个时，按照录入的先后顺序，把最前面的删掉
+当鼠标悬停在tag上时，tag前增加删除二字，点击tag可删除
+如示例图下方，实现一个兴趣爱好输入的功能
+通过一个Textarea进行兴趣爱好的输入，可以通过用回车，逗号（全角半角均可），顿号，空格（全角半角、Tab等均可）等符号作为间隔。
+当点击“确认兴趣爱好”的按钮时，将textarea中的输入按照你设定的间隔符，拆解成一个个的爱好，显示在textarea下方
+爱好不能重复，所以在下方呈现前，需要做一个去重
+每个爱好内容需要做trim处理
+最多允许10个兴趣爱好，多于10个时，按照录入的先后顺序，把最前面的删掉 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#input {
+      display: block;
+      margin: 10px 0 10px 2px;
+      width: 184px;
+      height: 2.2em;
+    }
+
+    #area {
+      display: block;
+      margin: 100px 0 10px 2px;
+    }
+
+    label {
+      display: block;
+      margin: 4px auto;
+      font-size: 1.2em;
+      font-family: Helvetica;
+    }
+
+    .tag {
+      float: left;
+      background: #49D;
+      color: #EEE;
+      font-size: 1.3em;
+      line-height: 1.6em;
+      padding: 2px 8px;
+      margin: 10px 3px;
+      height: 32px;
+      font-family: Helvetica, Arial;
+      border-radius: 4px;
+    }
+
+    .hobby {
+      float: left;
+      background: #D93;
+      color: #EEE;
+      font-size: 1.3em;
+      line-height: 1.6em;
+      padding: 2px 8px;
+      margin: 10px 3px;
+      height: 32px;
+      font-family: Helvetica, Arial;
+      border-radius: 4px;
+    }
+
+    .hover {
+      background: #F33;
+      float: left;
+      color: #EEE;
+      font-size: 1.3em;
+      line-height: 1.6em;
+      padding: 2px 8px;
+      margin: 10px 3px;
+      height: 32px;
+      font-family: Helvetica, Arial;
+      border-radius: 4px;
+    }
+
+    #add {
+      display: block;
+      font-size: 13px;
+    }
+	</style>
+</head>
+<body>
+
+<label>Tag:
+  <input type="text" id='input' placeholder="输入tag，按空格，逗号或回车确定">
+</label>
+
+<div id="tag"></div>
+
+<div id='area'>
+  <label for="text">爱好:</label>
+  <textarea type="text" id='text' cols="40" rows="7" placeholder="输入爱好，以逗号或空格隔开，点击下方按钮确定">
+  </textarea>
+
+  <button id='add'>确认兴趣爱好</button>
+</div>
+
+<div id='hobby'></div>
+
+<script src='task21.js'></script>
+</body>
+</html>

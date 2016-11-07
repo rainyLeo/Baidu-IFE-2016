@@ -1,0 +1,94 @@
+<!-- 任务描述
+
+基于任务23，添加节点的选择、增加与删除的功能
+点击某个节点元素，则该节点元素呈现一个特殊被选中的样式
+增加一个删除按钮，当选中某个节点元素后，点击删除按钮，则将该节点及其所有子节点删除掉
+增加一个输入框及一个“添加”按钮当选中某个节点元素后，点击增加按钮，则在该节点下增加一个子节点，节点内容为输入框中内容，插入在其子节点的最后一个位置 -->
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>task23</title>
+    <style>
+      div {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+        border: 1px solid #000;
+        box-sizing: border-box;
+        padding: 9px;
+        margin: 2px;
+        overflow: hidden;;
+      }
+      #first {
+        width: 90%;
+      }
+      section {
+        width: 90%;
+        text-align: center;
+        margin: 20px auto;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <div id="first">
+      super
+      <div>
+        cat
+        <div>
+          apple
+          <div>pear</div>
+          <div>pig</div>
+          <div>cola</div>
+          <div>soccer</div>
+        </div>
+        <div>
+          phone
+        </div>
+        <div>
+          study
+          <div>book</div>
+          <div>school</div>
+        </div>
+      </div>
+
+      <div>
+        note
+        <div>
+          human
+          <div>code</div>
+          <div>operate</div>
+          <div>man</div>
+        </div>
+        <div>
+          program
+          <div>
+            batman
+            <div>dog</div>
+          </div>
+          <div>
+            glass
+          </div>
+        </div>
+      </div>
+
+      <div>fish</div>
+
+    </div>
+
+    <section>
+      <button id="depth">depth first</button>
+      <button id="breadth">breadth first</button>
+      <input type="text" name="search" id='input'>
+      <button id="depthsearch">depth search</button>
+      <button id="breadthsearch">breadth search</button>
+
+      <button id="delete">delete</button>
+      <input type="text" name="name" id="addinput">
+      <button id="add">add</button>
+    </section>
+    <script src='task24.js'></script>
+  </body>
+  </html>

@@ -1,0 +1,57 @@
+<!-- 任务描述
+
+实现如 示例图（点击打开） 的效果
+灰色元素水平垂直居中，有两个四分之一圆位于其左上角和右下角。 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>task4</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .box {
+      width: 400px;
+      height: 200px;
+      background: #ccc;
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -100px 0 0 -200px;
+
+    }
+
+    .topleft, .bottomright {
+      width: 50px;
+      height: 50px;
+      background: #fc0;
+    }
+
+    .topleft {
+      border-bottom-right-radius: 50px;
+    }
+
+    .bottomright {
+      border-top-left-radius: 50px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+
+
+
+
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="topleft"></div>
+    <div class="bottomright"></div>
+  </div>
+
+</body>
+</html>

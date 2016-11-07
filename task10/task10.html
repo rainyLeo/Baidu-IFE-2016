@@ -1,0 +1,73 @@
+<!-- 任务描述
+
+需要实现的效果如效果图（点击打开）所示，调整浏览器宽度查看响应式效果，红色的文字是说明，不需要写在 HTML 中。 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>task10</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    @media (min-width: 641px) {
+      .container {
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      
+      .box4 {
+        order: -1;
+      }
+    }
+
+    .container div {
+      margin-bottom: 20px;
+    }
+
+    .box1 {
+      height: 120px;
+      width: 150px;
+      border: 1px solid #f00;
+    }
+
+    .box2 {
+      height: 100px;
+      width: 150px;
+      border: 1px solid #f00;
+    }
+
+    .box3 {
+      height: 40px;
+      width: 150px;
+      border: 1px solid #f00;
+    }
+
+    .box4 {
+      height: 200px;
+      width: 150px;
+      border: 1px solid #0f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box1"></div>
+    <div class="box2"></div>
+    <div class="box3"></div>
+    <div class="box4"></div>
+  </div>
+
+</body>
+</html>

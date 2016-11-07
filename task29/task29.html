@@ -1,0 +1,73 @@
+<!-- 任务描述
+
+如示例图中所示，在页面中实现一个输入框与按钮，要求点击验证按钮后，对输入框中内容进行格式校验，并在其下方显示校验结果
+校验规则：
+1.字符数为4~16位
+2.每个英文字母、数字、英文符号长度为1
+3.每个汉字，中文符号长度为2 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>task29</title>
+  <style media="screen">
+    form {
+      margin: 60px auto;
+      width: 550px;
+    }
+
+    input {
+      width: 200px;
+      height: 2em;
+      margin: auto 10px;
+      border-radius: 3px;
+      outline: 0;
+      box-shadow: none;
+    }
+
+    input.valid {
+      width: 200px;
+      height: 2em;
+      border: 1px solid green;
+    }
+
+    input.invalid {
+      width: 200px;
+      height: 2em;
+      border: 1px solid red;
+    }
+
+    button {
+      height: 1.8em;
+      font-size: 1em;
+      border: none;
+      border-radius: 3px;
+      color: #fff;
+      background: #337ab8
+    }
+
+    span {
+      display: block;
+      font-size: 0.8em;
+      color: #777;
+      margin: 5px 0 0 44px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <form>
+    <label for="input">名称</label>
+    <input type="text" id="input" value="">
+    <button type="button" id="validate">验证</button>
+    <span id="display">必填，长度为4～16个字符</span>
+  </form>
+
+
+
+  <script src="task29.js"></script>
+</body>
+
+</html>

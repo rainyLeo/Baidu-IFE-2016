@@ -1,0 +1,188 @@
+<!--
+任务描述
+
+如图（打开查看），创建一个虚拟宇宙，包括一个行星和飞船
+每个飞船由以下部分组成
+动力系统，可以完成飞行和停止飞行两个行为，暂定所有飞船的动力系统飞行速度是一致的，比如每秒20px，飞行过程中会按照一定速率消耗能源（比如每秒减5%）
+能源系统，提供能源，并且在宇宙中通过太阳能充电（比如每秒增加2%，具体速率自定）
+信号接收处理系统，用于接收行星上的信号
+自爆系统，用于自我销毁
+每个飞船的能源是有限的，用一个属性来表示能源剩余量，这是一个百分比，表示还剩余多少能源。
+能源耗尽时，飞船会自动停止飞行
+飞船有两个状态：飞行中和停止，飞船的行为会改变这个属性状态
+飞船的自我销毁方法会立即销毁飞船自身
+行星上有一个指挥官（不需要在页面上表现出其形象），指挥官可以通过行星上的信号发射器发布如下命令
+创建一个新的飞船进入轨道，最多可以创建4个飞船，刚被创建的飞船会停留在某一个轨道上静止不动
+命令某个飞船开始飞行，飞行后飞船会围绕行星做环绕运动，需要模拟出这个动画效果
+命令某个飞船停止飞行
+命令某个飞船销毁，销毁后飞船消失、飞船标示可以用于下次新创建的飞船
+你需要设计类似如下指令格式的数据格式
+			{
+				id: 1,
+				commond: 'stop'
+			}
+
+指挥官通过信号发射器发出的命令是通过一种叫做Mediator的介质进行广播
+Mediator是单向传播的，只能从行星发射到宇宙中，在发射过程中，有30%的信息传送失败（丢包）概率，你需要模拟这个丢包率，另外每次信息正常传送的时间需要1秒
+指挥官并不知道自己的指令是不是真的传给了飞船，飞船的状态他是不知道的，他只能通过自己之前的操作来假设飞船当前的状态
+每个飞船通过信号接收器，接受到通过Mediator传达过来的指挥官的广播信号，但因为是广播信号，所以每个飞船能接受到指挥官发出给所有飞船的所有指令，因此需要通过读取信息判断这个指令是不是发给自己的
+  -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>task26</title>
+</head>
+<style>
+  body {
+    background: #000;
+  }
+
+  div#orbit {
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #999;
+    width: 500px;
+    height: 500px;
+    margin: auto;
+  }
+
+  div#orbit,
+  div#orbit div {
+    border-radius: 50%;
+  }
+
+  div#orbit,
+  div#orbit div {
+    border: 1px solid #999;
+    box-sizing: border-box;
+    padding: 50px;
+    position: relative;
+  }
+
+  div#first {
+    background: #ff6f48
+  }
+
+  span#ship1,
+  span#ship2,
+  span#ship3,
+  span#ship4 {
+    position: absolute;
+    width: 70px;
+    line-height: 20px;
+    height: 30px;
+    text-align: center;
+    height: 15px;
+    background: #888;
+    padding: 5px;
+  }
+
+  span#ship1 {
+    transition: transform 1s linear;
+    transform-origin: 40px 108px;
+    top: -8px;
+    left: 62px;
+  }
+
+  span#ship2 {
+    transition: transform 1s linear;
+    transform-origin: 40px 159px;
+    left: 113px;
+    top: -8px;
+  }
+
+  span#ship3 {
+    transition: transform 1s linear;
+    transform-origin: 40px 210px;
+    left: 164px;
+    top: -8px;
+  }
+
+  span#ship4 {
+    transition: transform 1s linear;
+    transform-origin: 40px 257px;
+    left: 210px;
+    top: -8px;
+  }
+
+  span#ship2, span#ship3, span#ship4,
+  div#orbit2control,
+  div#orbit3control,
+  div#orbit4control {
+    display: none;
+  }
+
+  /* control panel*/
+
+  div#control {
+    width: 700px;
+    border: 1px solid #777;
+    margin: 10px auto;
+    display: block;
+    background: #ddd;
+  }
+</style>
+
+<body>
+  <div id="control-panel"></div>
+
+
+  <div id="orbit">
+    <span id="ship4">4号<span id="energy4">100</span>%</span>
+    <div id="orbit3">
+      <span id="ship3">3号<span id="energy3">100</span>%</span>
+      <div id="orbit2">
+        <span id="ship2">2号<span id="energy2">100</span>%</span>
+        <div id="orbit1">
+          <span id="ship1">1号<span id="energy1">100</span>%</span>
+          <div id="first">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="control">
+
+    <div id="display"></div>
+    <div id="orbit1control">
+      <span>对1号飞船下达指令：</span>
+      <button id="start1">开始飞行</button>
+      <button id="stop1">停止飞行</button>
+      <button id="destroy1">销毁</button>
+    </div>
+
+    <div id="orbit2control">
+      <span>对2号飞船下达指令：</span>
+      <button id="start2">开始飞行</button>
+      <button id="stop2">停止飞行</button>
+      <button id="destroy2">销毁</button>
+    </div>
+
+    <div id="orbit3control">
+      <span>对3号飞船下达指令：</span>
+      <button id="start3">开始飞行</button>
+      <button id="stop3">停止飞行</button>
+      <button id="destroy3">销毁</button>
+    </div>
+
+    <div id="orbit4control">
+      <span>对4号飞船下达指令：</span>
+      <button id="start4">开始飞行</button>
+      <button id="stop4">停止飞行</button>
+      <button id="destroy4">销毁</button>
+    </div>
+
+    <button id="create">创建新飞船</button>
+
+  </div>
+
+  <script src="task26.js"></script>
+</body>
+
+</html>

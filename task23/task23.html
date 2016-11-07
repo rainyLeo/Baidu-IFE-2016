@@ -1,0 +1,91 @@
+<!-- 任务描述
+
+基于任务22，参考示例图，将二叉树变成了多叉树，并且每一个节点中带有内容
+提供一个按钮，显示开始遍历，点击后，以动画的形式呈现遍历的过程
+当前被遍历到的节点做一个特殊显示（比如不同的颜色）
+每隔一段时间（500ms，1s等时间自定）再遍历下一个节点
+增加一个输入框及一个“查询”按钮，点击按钮时，开始在树中以动画形式查找节点内容和输入框中内容一致的节点，找到后以特殊样式显示该节点，找不到的话给出找不到的提示。查询过程中的展示过程和遍历过程保持一致 <-->
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>task23</title>
+    <style>
+      div {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+        border: 1px solid #000;
+        box-sizing: border-box;
+        padding: 9px;
+        margin: 2px;
+        overflow: hidden;;
+      }
+      #first {
+        width: 90%;
+      }
+      section {
+        width: 90%;
+        text-align: center;
+        margin: 20px auto;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <div id="first">
+      super
+      <div>
+        cat
+        <div>
+          apple
+          <div>pear</div>
+          <div>pig</div>
+          <div>cola</div>
+          <div>soccer</div>
+        </div>
+        <div>
+          phone
+        </div>
+        <div>
+          study
+          <div>book</div>
+          <div>school</div>
+        </div>
+      </div>
+
+      <div>
+        note
+        <div>
+          human
+          <div>code</div>
+          <div>operate</div>
+          <div>man</div>
+        </div>
+        <div>
+          program
+          <div>
+            batman
+            <div>dog</div>
+          </div>
+          <div>
+            glass
+          </div>
+        </div>
+      </div>
+
+      <div>fish</div>
+
+    </div>
+
+    <section>
+      <button id="depth">depth first</button>
+      <button id="breadth">breadth first</button>
+      <input type="text" name="search" id='input'>
+      <button id="depthsearch">depth search</button>
+      <button id="breadthsearch">breadth search</button>
+    </section>
+    <script src='task23.js'></script>
+  </body>
+  </html>

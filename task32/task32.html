@@ -1,0 +1,136 @@
+<!-- 任务描述
+
+实现以JavaScript对象的方式定义表单及验证规则
+表单配置参考示例如下：（不需要一致，仅为参考）
+
+    {
+        label: '名称',                    // 表单标签
+        type: 'input',                   // 表单类型
+        validator: function () {...},    // 表单验证规
+        rules: '必填，长度为4-16个字符',    // 填写规则提示
+        success: '格式正确',              // 验证通过提示
+        fail: '名称不能为空'               // 验证失败提示
+    }
+
+基于该配置项，实现一套逻辑，可以自动生成表单的展现、交互、验证
+使用你制作的表单工厂，在一个页面上创建两套样式不同的表单 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>task23</title>
+  <style>
+    form#form-input {
+      width: 40%;
+      float: left;
+    }
+
+    form#form-input fieldset {
+      margin: 15px 10px;
+      min-width: 200px;
+    }
+
+    fieldset textarea {
+      margin: 5px auto;
+    }
+
+    form#form-output {
+      width: 55%;
+      float: right;
+      border: 1px solid #888;
+      margin: 10px 0 0 5px;
+      line-height: 3em;
+    }
+
+    form#form-output div > label, form#form-output div > span {
+      display: inline-block;
+      margin-right: 15px;
+    }
+
+    button#add-btn {
+      font-size: 1.2em;
+      background: #3e74f3;
+      color: #fff;
+      outline: 0;
+      border: 1px solid #999;
+      cursor: pointer;
+      border-radius: 3px;
+      box-shadow: 0px 4px #888;
+      padding: 4px 9px;
+      margin: 5px 10px;
+    }
+
+    button#add-btn:hover {
+      background: #3e54e3;
+    }
+
+    button#add-btn:active {
+      box-shadow: 0 2px #666;
+      transform: translateY(2px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <form id="form-input">
+    <fieldset id="input-type">
+      <legend>类型</legend>
+      <input type="radio" name="inputtype" id="text" value="输入框">
+      <label for="text">输入框</label>
+      <input type="radio" name="inputtype" id="radio" value="单选框">
+      <label for="radio">单选框</label>
+      <input type="radio" name="inputtype" id="checkbox" value="多选框">
+      <label for="checkbox">多选框</label>
+      <input type="radio" name="inputtype" id="select" value="下拉框">
+      <label for="select">下拉框</label>
+      <input type="radio" name="inputtype" id="textarea" value="文本框">
+      <label for="textarea">文本框</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>配置表单</legend>
+      <label for="name-input">名称</label>
+      <input type="text" id="name-input" value="">
+      <input type="radio" name="require" id="required-radio" value="">
+      <label for="required-radio">必填</label>
+      <input type="radio" name="require" id="selected-radio" value="">
+      <label for="selected-radio">选填</label>
+      <label for="style-select">样式</label>
+      <select id="style-select">
+        <option value="option">样式1</option>
+        <option value="option">样式2</option>
+      </select>
+    </fieldset>
+
+    <fieldset id="input-rule">
+      <legend>规则</legend>
+      <input type="radio" name="input-rule" id="username" value="text">
+      <label for="username">用户名</label>
+      <input type="radio" name="input-rule" id="password" value="password">
+      <label for="password">密码</label>
+      <input type="radio" name="input-rule" id="email" value="email">
+      <label for="email">邮箱</label>
+      <input type="radio" name="input-rule" id="tel" value="tel">
+      <label for="tel">手机号</label>
+    </fieldset>
+
+    <fieldset id="input-content">
+      <legend>选项内容</legend>
+      <textarea id="textarea-content" rows="5" cols="30" placeholder="可用空格，逗号分隔内容"></textarea>
+    </fieldset>
+
+    <button type="button" id="add-btn">Add</button>
+
+  </form>
+
+  <form id="form-output">
+    <h2>表单输出区域</h2>
+  </form>
+
+  <script src="task32.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,402 @@
+<!-- 任务描述
+
+如图，新增元素“墙”，墙是正方形不可进入、越过的区域
+新增修墙的指令，BUILD，执行指令时，会在当前方块面对的方向前修建一格墙壁，如果被指定修墙的地方超过边界墙或者已经有墙了，则取消修墙操作，并调用浏览器的console.log方法打印一个错误日志
+新增粉刷的指令，BRU color，color是一个字符串，保持和css中颜色编码一致。执行指令时，如果当前方块蓝色边面对方向有紧相邻的墙，则将这个墙颜色改为参数颜色，如果没有，则通过调用浏览器的console.log方法，打印一个错误日志
+尝试写一段代码，实现在空间内修建一个长长的五颜六色的墙或者有趣的图形
+新增一个按钮，可以在空间内随机生成一些墙
+增加一个指令：MOV TO x, y，会使得方块从当前位置移动到坐标为x，y的地方，移动过程中不能进入墙所在的地方，寻路算法请自行选择并实现，不做具体要求 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>task35</title>
+  <style>
+    /****** Grid area ******/
+
+    div#grid {
+      width: 55%;
+      float: left;
+    }
+
+    @media (max-width: 768px) {
+      div#grid {
+        width: 90%;
+      }
+    }
+
+    .wall {
+      background: #aaa;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: 5px;
+    }
+
+    td {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      position: relative;
+    }
+
+    tr:nth-child(n+2)> td:nth-child(n+2) {
+      border: 2px solid #ddd;
+    }
+
+    tr:nth-child(1)> td:nth-child(n+2),
+    tr:nth-child(11)> td:nth-child(n+2) {
+      border-bottom: 2px solid #111;
+      z-index: 10;
+    }
+
+    tr:nth-child(n+2)> td:nth-child(1),
+    tr:nth-child(n+2)> td:nth-child(11) {
+      border-right: 2px solid #111;
+    }
+
+    td#gridmark {
+      background: #f32;
+    }
+
+    td span {
+      display: inline-block;
+      background: #22f;
+      position: absolute;
+    }
+
+    td span.bottom {
+      height: 12px;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+    }
+
+    td span.top {
+      height: 12px;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    td span.left {
+      width: 25%;
+      height: 42px;
+      left: 0;
+      top: 0;
+    }
+
+    td span.right {
+      width: 25%;
+      height: 42px;
+      top: 0;
+      right: 0;
+    }
+    /****** execute area ******/
+
+    div#execute {
+      margin: 15px 0 0 30px;
+      padding: 0;
+    }
+
+    div#buttonarea {
+      font-size: 1em !important;
+      margin-bottom: 8px;
+    }
+
+    div#buttonarea button {
+      font-size: 1em;
+      background: #3e80e7;
+      border-radius: 3px;
+      padding: 5px;
+      color: #fff;
+      border: 0;
+      cursor: pointer;
+    }
+
+    div#buttonarea #build {
+      margin-left: 15px;
+    }
+
+    div#buttonarea input {
+      height: 1.5em;
+      font-size: 1em;
+    }
+
+    div#commandline {
+      width: 100%;
+      overflow: hidden;
+      min-width: 430px;
+    }
+
+    div#line-number {
+      float: left;
+      width: 20px;
+      height: 168px;
+      text-align: center;
+      background: #444;
+      color: #ccc;
+      margin: 0;
+      padding: 3px 2px;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+
+    div#line-number span {
+      display: block;
+      margin-top: 3px;
+      font-family: monospace;
+      font-size: 16px;
+    }
+
+    span.error {
+      background: #f00;
+      border-radius: 50%;
+    }
+
+    ::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
+
+    textarea {
+      background: #111;
+      color: #2aa13c;
+      font-size: 1.1em;
+      border: 1px solid #000;
+      outline: 0;
+      resize: none;
+    }
+    /******  Description area ******/
+
+    div#description {
+      border: 1px solid #555;
+      margin-right: 10%;
+      width: 36%;
+      min-width: 350px;
+      overflow: auto;
+      padding: 10px 10px 0 0;
+    }
+
+    div#description h3 {
+      text-align: center;
+    }
+
+    pre {
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="grid">
+    <table>
+      <tbody id="table">
+        <tr>
+          <td>X\Y</td>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>6</td>
+          <td>7</td>
+          <td>8</td>
+          <td>9</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div id="execute">
+      <div id="buttonarea">
+        <button id="btn">执行</button>
+        <button id="clear">清屏</button>
+        <button id="build">随机修墙</button>
+        <input type="text" id="wallnum" placeholder="填写修墙数,默认1">
+      </div>
+
+      <div id="commandline">
+        <div id="line-number">
+        </div>
+        <textarea id="textarea" rows="8" cols="40" spellcheck="false" placeholder="这里输入命令"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div id="description">
+    <h3>可用命令说明</h3>
+    <pre>
+  所有命令不区分大小写, 中间空格1格, 命令错误
+  时红色圆点提示
+   
+  n为可选参数, 移动步数, 不指定则移动1格<br />
+  <strong>移动命令:</strong>
+  go       前进1格
+  go n     前进n格
+
+  tra lef n  左移n格
+  tra rig n  右移n格
+  tra bot n  下移n格
+  tra top n  上移n格
+
+  mov lef n  向左转向, 并移动n格
+  mov rig n  向右转向, 并移动n格
+  mov bot n  向下转向, 并移动n格
+  mov top n  向上转向, 并移动n格
+
+  <strong>转向命令:</strong>
+  tun lef   向左转向
+  tun rig   向右转向
+  tun bac   掉头转向
+
+  <strong>修墙/刷墙命令:</strong>
+  build  在当前方向修建一面墙
+  bru color 粉刷当前位置的一面墙, color为颜色
+  字符串,可用格式: #f00, #ff0000, rgb(0, 0, 0),
+  rgba(255, 255, 255, 0.5)
+
+  <strong>寻路命令:</strong>
+  mov to x,y 移动至指定坐标x,y
+  (坐标中间无空格, 竖直方向为X)
+    </pre>
+  </div>
+
+  <script src="task36.js"></script>
+</body>
+
+</html>

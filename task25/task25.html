@@ -1,0 +1,151 @@
+<!-- 任务描述
+
+基于任务24的基本代码，实现一个树形组件，可参考如图示例，样式自定义，不做限制
+要求有以下功能：
+节点的折叠与展开
+允许增加节点与删除节点
+按照内容进行节点查找，并且把找到的节点进行特殊样式呈现，如果找到的节点处于被父节点折叠隐藏的状态，则需要做对应的展开 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>task23</title>
+  <style>
+    section {
+      width: 90%;
+      text-align: center;
+      margin: 20px auto;
+    }
+
+    div.wrapper {
+      width: 50%;
+      margin: 20px auto;
+      height: 800px;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    span {
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    span:first-child {
+      display: inline-block;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 10px solid #080;
+      /*width: 0;*/
+      /*height: 0;*/
+      /*margin-top: 10px;*/
+
+    }
+
+    span:last-child:focus, span:last-child:active {
+      background: none;
+      outline: none;
+    }
+    span.click {
+      display: inline-block;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 10px solid #080;
+      position: relative;
+      top: 5px;
+        /*margin: 10px;*/
+      /*margin-top: 2px;*/
+    }
+
+    .item {
+      /*display: block;*/
+    }
+
+    #deleteit {
+
+    }
+
+    .item:hover {
+      color: #00f;
+    }
+    /*.item:hover:after {
+      content: 'add delete';
+      color: #990;
+      margin-left: 10px;
+    }*/
+    button {
+      display: inline-block;
+    }
+    strong {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <ul>
+
+      <li>
+        <span></span>
+        <span class="item">语言</span>
+        <ul>
+          <li class="item">html5</li>
+          <li class="item">css3</li>
+
+          <li>
+            <span></span>
+            <span class="item">javascript</span>
+
+            <ul>
+              <span></span>
+              <span class="item">框架</span>
+              <ul>
+                <li class="item">Backbone</li>
+                <li class="item">Angular</li>
+                <li class="item">React</li>
+                <li class="item">Vue</li>
+              </ul>
+
+            </ul>
+
+          </li>
+
+        </ul>
+      </li>
+
+      <li>
+        <span></span>
+        <span class="item">算法</span>
+        <ul>
+          <li class="item">排序算法</li>
+          <li class="item">图论算法</li>
+        </ul>
+      </li>
+
+      <li>
+        <span></span>
+        <span class="item">工具</span>
+        <ul>
+          <li class="item">webpack</li>
+          <li class="item">babel</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <section>
+    <input type="text" name="search" id='input'>
+    <button id="depthsearch">depth search</button>
+    <button id="breadthsearch">breadth search</button>
+
+    <button id="delete">delete</button>
+    <input type="text" name="name" id="addinput">
+    <button id="add">add</button>
+  </section>
+  <script src='task25.js'></script>
+</body>
+
+</html>

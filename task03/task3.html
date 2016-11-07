@@ -1,0 +1,106 @@
+<!-- 任务描述
+
+使用 HTML 与 CSS 按照 示例图（点击查看） 实现三栏式布局。
+左右两栏宽度固定，中间一栏根据父元素宽度填充满，最外面的框应理解为浏览器。背景色为 #eee 区域的高度取决于三个子元素中最高的高度。 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>task3</title>
+  <style>
+    .wrapper {
+      width: 94%;
+      height: 100%;
+      margin: 20px auto;
+      background: #BBB;
+      overflow: auto;
+      min-width: 40em;
+    }
+
+    .left {
+      width: 200px;
+      height: 120px;
+      background: #fff;
+      float: left;
+      border: 1px solid #000;
+      margin: 20px;
+    }
+
+    .left .box {
+      margin: 20px;
+      display: inline-block;
+      text-align: center;
+      line-height: 5;
+    }
+
+    .left .box span {
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    .left > span {
+      display: inline-block;
+      position: absolute;
+      top: 60px;
+    }
+
+    .middle {
+      background: #fff;
+      border: 1px solid #000;
+      margin: 20px 160px 10px 240px;
+      padding: 20px;
+    }
+
+    .right {
+      float: right;
+      border: 1px solid #000;
+      width: 80px;
+      background: #fff;
+      padding: 0px 20px 20px 20px;
+      margin: 20px;
+    }
+
+    .right .box span {
+      display: inline-block;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .box {
+      width: 80px;
+      height: 80px;
+      margin-top: 20px;
+      background: #BBB;
+      border: 1px solid #999;
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <div class="left">
+      <div class="box">
+        <span>团队logo</span>
+      </div>
+
+      <span>团队名称</span>
+    </div>
+
+    <div class="right">
+      <div class="box"><span>personal logo</span></div>
+      <div class="box"><span>personal logo</span></div>
+      <div class="box"><span>personal logo</span></div>
+      <div class="box"><span>personal logo</span></div>
+    </div>
+
+    <div class="middle">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque rutrum sit amet eros at hendrerit. Duis malesuada justo ut luctus porttitor. Phasellus scelerisque, felis in sollicitudin porta, dui felis tristique ex, eget sollicitudin risus nibh ac erat. Morbi id sem ac elit fringilla scelerisque. In quis quam ut libero lobortis varius ac vel magna. Maecenas aliquet eleifend sapien. Donec quis magna sed magna pharetra imperdiet quis vitae mi. Praesent sodales lacus in lectus consequat congue. Morbi dictum dictum tincidunt. Pellentesque vitae quam quis eros sollicitudin elementum at a tortor. Fusce ultrices vulputate volutpat. Sed ultricies sem orci, nec ornare nibh ultricies at. Donec ante erat, luctus non ligula eget, sodales posuere felis. Quisque condimentum enim ipsum, quis ornare metus convallis non. Curabitur fermentum, massa ut rhoncus consectetur, tellus magna egestas turpis, et commodo diam metus ultrices ipsum. Nullam cursus eget mi nec pulvinar.</p>
+    </div>
+
+  </div>
+
+</body>
+</html>

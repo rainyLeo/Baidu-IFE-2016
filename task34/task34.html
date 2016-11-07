@@ -1,0 +1,256 @@
+<!-- 任务描述
+
+对于正方形的移动增加相应动画，包括移动和旋转
+每个指令的执行时间是1s（可以自己调整）
+增加新的指令如下：
+TRA LEF：向屏幕的左侧移动一格，方向不变
+TRA TOP：向屏幕的上面移动一格，方向不变
+TRA RIG：向屏幕的右侧移动一格，方向不变
+TRA BOT：向屏幕的下面移动一格，方向不变
+MOV LEF：方向转向屏幕左侧，并向屏幕的左侧移动一格
+MOV TOP：方向转向屏幕上面，向屏幕的上面移动一格
+MOV RIG：方向转向屏幕右侧，向屏幕的右侧移动一格
+MOV BOT：方向转向屏幕下面，向屏幕的下面移动一格 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>task33</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      margin: 10px;
+    }
+
+    td {
+      width: 46px;
+      height: 46px;
+      text-align: center;
+      position: relative;
+    }
+
+    tr:nth-child(n+2)> td:nth-child(n+2) {
+      border: 2px solid #ddd;
+      /*margin: -1px;*/
+      /*position: relative;*/
+      /*left: 0px;*/
+    }
+
+    tr:nth-child(1)> td:nth-child(n+2),
+    tr:nth-child(11)> td:nth-child(n+2) {
+      border-bottom: 2px solid #111;
+      z-index: 10;
+    }
+
+    tr:nth-child(n+2)> td:nth-child(1),
+    tr:nth-child(n+2)> td:nth-child(11) {
+      border-right: 2px solid #111;
+    }
+
+    /* control area */
+
+    div#execute {
+      margin: 15px 0 0 220px;
+    }
+
+    td#init {
+      background: #f32;
+    }
+
+    td span {
+      display: inline-block;
+      background: #22f;
+      position: absolute;
+    }
+
+    td span.bottom {
+      height: 12px;
+      width: 48px;
+      bottom: 0;
+      left: 0;
+    }
+
+    td span.top {
+      height: 12px;
+      width: 48px;
+      top: 0;
+      left: 0;
+    }
+
+    td span.left {
+      width: 12px;
+      height: 48px;
+      left: 0;
+      top: 0;
+    }
+
+    td span.right {
+      width: 12px;
+      height: 48px;
+      top: 0;
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <table>
+    <tbody id="table">
+    <tr>
+      <td></td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+      <td>7</td>
+      <td>8</td>
+      <td>9</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+  </table>
+
+  <div id="execute">
+    <input type="text" id='command' value="">
+    <button id="btn">执行</button>
+  </div>
+
+  <script src="task34.js"></script>
+</body>
+
+</html>

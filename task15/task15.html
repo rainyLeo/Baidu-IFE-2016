@@ -1,0 +1,104 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 01</title>
+  </head>
+<body>
+
+  <ul id="source">
+    <li>北京空气质量：<b>90</b></li>
+    <li>上海空气质量：<b>70</b></li>
+    <li>天津空气质量：<b>80</b></li>
+    <li>广州空气质量：<b>50</b></li>
+    <li>深圳空气质量：<b>40 </b></li>
+    <li>福州空气质量：<b>32</b></li>
+    <li>成都空气质量：<b>90</b></li>
+  </ul>
+
+  <ul id="resort">
+    <!--
+    <li>第一名：北京空气质量：<b>90</b></li>
+    <li>第二名：北京空气质量：<b>90</b></li>
+    <li>第三名：北京空气质量：<b>90</b></li>
+     -->
+
+  </ul>
+
+  <button id="sort-btn">排序</button>
+
+<script type="text/javascript">
+
+/*
+ * 任务描述
+
+  参考以下示例代码，读取页面上已有的source列表，从中提取出城市以及对应的空气质量
+  将数据按照某种顺序排序后，在resort列表中按照顺序显示出来
+*/
+
+/*
+ * getData方法
+ * 读取id为source的列表，获取其中城市名字及城市对应的空气质量
+ * 返回一个数组，格式如下
+   data = [
+     ["北京", 90],
+     ["北京", 90]
+     ……
+   ]
+ */
+function getData() {
+  let source = document.getElementById('source').children;
+  let text = [];
+  let data = [];
+
+  for (let i = 0, length = source.length; i < length; i++) {
+    text.push(source[i]['innerText']);
+  }
+  text.forEach(e => data.push([e.slice(0, 2), e.slice(-2)]));
+
+  return data;
+}
+
+/**
+ * sortAqiData
+ * 按空气质量对data进行从小到大的排序
+ * 返回一个排序后的数组
+ */
+function sortAqiData(data) {
+  data.sort((a, b) => a[1] > b[1]);
+  return data;
+}
+
+/**
+ * render
+ * 将排好序的城市及空气质量指数，输出显示到id位resort的列表中
+ * 格式见ul中的注释的部分
+ */
+function render(data) {
+  let resort = document.getElementById('resort');
+  let content = ``;
+
+  data.forEach((e, i, a) => {
+    content += `<li>第${i+1}名: ${e[0]}空气质量: <b>${e[1]}</b></li>`;
+  });
+  resort.innerHTML = content;
+}
+
+function btnHandle() {
+  let aqiData = getData();
+  aqiData = sortAqiData(aqiData);
+  render(aqiData);
+}
+
+// 在这下面给按钮sort-btn绑定一个点击事件，点击时触发btnHandle函数
+function init() {
+  let btn = document.getElementById('sort-btn');
+  btn.onclick = btnHandle;
+}
+
+init();
+
+</script>
+
+</body>
+</html>

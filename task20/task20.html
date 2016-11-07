@@ -1,0 +1,46 @@
+<!-- 任务描述
+
+基于任务18进行升级
+将新元素输入框从input改为textarea
+允许一次批量输入多个内容，格式可以为数字、中文、英文等，可以通过用回车，逗号（全角半角均可），顿号，空格（全角半角、Tab等均可）等符号作为不同内容的间隔
+增加一个查询文本输入框，和一个查询按钮，当点击查询时，将查询词在各个元素内容中做模糊匹配，将匹配到的内容进行特殊标识，如文字颜色等。举例，内容中有abcd，查询词为ab或bc，则该内容需要标识 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.box {
+			color: #FFF;
+			background-color: #F41;
+			font-size: 1.4em;
+			line-height: 1.7em;
+			float: left;
+			margin: 10px 3px;
+			padding: 2px 4px;
+			height: 38px;
+		}
+
+		span {
+			color: black;
+		}
+	</style>
+</head>
+<body>
+<textarea type="text" id='text'>
+</textarea>
+
+<button id='leftIn'>左侧入</button>
+<button id='rightIn'>右侧入</button>
+<button id='leftOut'>左侧出</button>
+<button id='rightOut'>右侧出</button>
+<input type="text" id='input'>
+<button id='search'>查询</button>
+
+
+<div id='boxarea'></div>
+<script src='task20.js'></script>
+</body>
+</html>

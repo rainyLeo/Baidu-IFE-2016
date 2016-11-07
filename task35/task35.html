@@ -1,0 +1,300 @@
+<!-- 任务描述
+
+如图，命令输入框由input变为textarea，可以允许输入多条指令，每一行一条
+textarea左侧有一列可以显示当前行数的列（代码行数列），列数保持和textarea中一致
+当textarea发生上下滚动时，代码行数列同步滚动
+能够判断指令是否合法，不合法的指令给出提示（如图）
+点击执行时，依次逐条执行所有命令
+对于GO，TRA以及MOV指令增加可以移动格子数量的参数，例如
+GO 3：向当前方向前进三格
+TRA TOP 2：向屏幕上方平移两格
+MOV RIG 4：方向转向屏幕右侧，向屏幕的右侧移动四格 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>task35</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      margin: 10px;
+    }
+
+    td {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      position: relative;
+    }
+
+    tr:nth-child(n+2)> td:nth-child(n+2) {
+      border: 2px solid #ddd;
+    }
+
+    tr:nth-child(1)> td:nth-child(n+2),
+    tr:nth-child(11)> td:nth-child(n+2) {
+      border-bottom: 2px solid #111;
+      z-index: 10;
+    }
+
+    tr:nth-child(n+2)> td:nth-child(1),
+    tr:nth-child(n+2)> td:nth-child(11) {
+      border-right: 2px solid #111;
+    }
+    /* control area */
+
+    div#execute {
+      margin: 15px 0 0 100px;
+      padding: 0;
+    }
+
+    td#init {
+      background: #f32;
+    }
+
+    td span {
+      display: inline-block;
+      background: #22f;
+      position: absolute;
+    }
+
+    td span.bottom {
+      height: 12px;
+      width: 42px;
+      bottom: 0;
+      left: 0;
+    }
+
+    td span.top {
+      height: 12px;
+      width: 42px;
+      top: 0;
+      left: 0;
+    }
+
+    td span.left {
+      width: 12px;
+      height: 42px;
+      left: 0;
+      top: 0;
+    }
+
+    td span.right {
+      width: 12px;
+      height: 42px;
+      top: 0;
+      right: 0;
+    }
+
+    div#line-number {
+      display: inline-block;
+      float: left;
+      width: 20px;
+      height: 168px;
+      text-align: center;
+      background: #444;
+      color: #ccc;
+      margin: 0;
+      padding: 3px 2px;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+
+    div#execute {
+      overflow: hidden;
+    }
+
+    div#line-number span {
+      display: block;
+      margin-top: 3px;
+      font-family: monospace;
+      font-size: 16px;
+    }
+
+    span.error {
+      background: #f00;
+      border-radius: 50%;
+    }
+
+    ::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
+
+    textarea {
+      background: #111;
+      color: #2aa13c;
+      font-size: 1.1em;
+      border: 1px solid #000;
+      outline: 0;
+      resize: none;
+    }
+  </style>
+</head>
+
+<body>
+  <table>
+    <tbody id="table">
+      <tr>
+        <td></td>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+        <td>7</td>
+        <td>8</td>
+        <td>9</td>
+        <td>10</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div id="execute">
+    <div>
+      <button id="btn">执行</button>
+      <button id="clear">清屏</button>
+    </div>
+    <div id="line-number">
+    </div>
+    <textarea id="textarea" rows="8" cols="40" spellcheck="false"></textarea>
+  </div>
+
+  <script src="task35.js"></script>
+</body>
+
+</html>

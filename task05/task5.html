@@ -1,0 +1,336 @@
+<!-- 任务描述
+
+基于第一个任务“零基础HTML编码”的代码，参考 示例图（点击查看），在步骤一的代码基础上增加CSS样式代码的编写
+头部和底部的黑色区域始终是100%宽
+页面右侧部分为固定宽度，左侧保持与浏览器窗口变化同步自适应变化
+左侧的各个模块里面的内容宽度跟随左侧整体宽度同步自适应变化
+10张图片需要永远都完整展现，所以会随着宽度变窄，从两行变成三行甚至更多，也有可能随着宽度变宽，变成一行 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>task2</title>
+  <style>
+
+    body {
+      margin: 0;
+      background-color: #DEDEDE;
+      font-family: Helvetica;
+    }
+
+    header {
+      height: 56px;
+      width: 100%;
+      background: #333;
+    }
+
+    .wrapper {
+      overflow: auto;
+      min-width: 490px;
+    }
+
+    .wrapper .content {
+      margin: 15px 500px 10px 20px;
+      min-width: 240px;
+
+      /*方法2*/
+      /*float: left;*/
+      /*width: calc(100% - 500px);*/
+    }
+
+    .wrapper .sidebar {
+      width: 450px;
+      float: right;
+      background-color: #EEE;
+      border: 1px solid #ccc;
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
+      margin: 15px 10px;
+      padding: 10px;
+    }
+
+    footer {
+      clear: both;
+      background: #333;
+      color: #fff;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+    }
+
+    /*header area*/
+
+    ul.nav {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      list-style: none;
+    }
+
+    ul.nav li {
+      float: right;
+      margin-right: 15px
+    }
+
+    ul.nav a {
+      display: block;
+      padding: 0 0.2em;
+      line-height: 3.5em;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    ul.nav a:hover,
+    ul.nav a:focus {
+      color: #05F;
+    }
+
+    /* .wrapper .content area */
+
+    article {
+      background-color: #EEE;
+      width: 92%;
+      border: 1px solid #ccc;
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
+      margin: 15px auto;
+      padding: 15px;
+    }
+
+    .author {
+      color: #666;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 80%;
+      margin: 5px 0;
+    }
+
+    table th {
+      text-align: left;
+      background-color: #333;
+      color: #FFF;
+      font-weight: normal;
+    }
+
+    table th,
+    table td {
+      padding: 4px;
+    }
+
+    table,
+    thead,
+    tbody,
+    tr,
+    td,
+    th {
+      border: 1px solid #555;
+    }
+
+    table .sum {
+      background-color: #CCC;
+      font-weight: bold;
+    }
+
+    table col.first {
+      background: #090;
+    }
+
+    /*.wrapper sidebar area*/
+
+    form .left {
+      float: left;
+      width: 200px;
+      text-align: right;
+      margin-right: 15px;
+    }
+
+    form {
+      line-height: 1.7em;
+      font-size: 0.9em;
+    }
+
+    form input[type='email'],
+    form input[type='password'] {
+      width: 160px;
+    }
+
+    form .description {
+      display: block;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    form div {
+      overflow: hidden;
+    }
+
+    button {
+      width: 80%;
+      font-size: 1.1em;
+      margin: 10px auto;
+      display: block;
+      border-radius: 10px;
+      height: 40px;
+      color: #DDD;
+      background: #3355d0;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <ul class='nav'>
+      <li><a href="#">guid link1</a></li>
+      <li><a href="#">guide link2</a></li>
+      <li><a href="#">guide link3</a></li>
+      <li><a href="#">guide link4</a></li>
+    </ul>
+  </header>
+
+  <div class="wrapper">
+
+    <div class="sidebar">
+      <h2>form submit</h2>
+
+      <form>
+
+        <div>
+          <label class="left" for="email"> Enter email address: </label>
+          <div>
+            <input type="email" name="email" id="email">
+            <span class="description">Email address correct formation</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="left" for="password"> Enter your password: </label>
+          <input type="password" name="password" id="password">
+        </div>
+
+        <div>
+          <label class="left" for="password2"> Enter your password again: </label>
+          <div>
+            <input type="password" name="password" id="password2">
+            <span class="description">Password shoud be 6-18 character or nubmer</span>
+          </div>
+        </div>
+
+        <div>
+          <span class="left">Sex: </span>
+          <input type="radio" name="gender" value='male' id="man" checked>
+          <label for="man">Man</label>
+          <input type="radio" name="gender" value="female" id="woman">
+          <label for="woman">Woman</label>
+        </div>
+
+        <div>
+          <span class="left">City: </span>
+          <select name="city">
+            <option value="beijing">beijing</option>
+            <option value="shanghai">shanghai</option>
+            <option value="suzhou">suzhou</option>
+          </select>
+        </div>
+
+        <div>
+          <span class="left">Hobby: </span>
+          <label for="sports">Sports</label>
+          <input type="checkbox" name="hobby" value="sports" id="sports">
+          <label for="arts">Arts</label>
+          <input type="checkbox" name="hobby" value="sports" id="arts">
+          <label for="science">Science</label>
+          <input type="checkbox" name="hobby" value="science" id="science">
+        </div>
+
+        <div>
+          <label class="left" for="textarea">Self introduction: </label>
+          <textarea name="intro" rows="6" cols="30" style="resize:none;" id="textarea"></textarea>
+        </div>
+
+      </form>
+
+      <button type="submit">confim submit</button>
+
+    </div>
+
+    <div class="content">
+
+      <article id='article1'>
+        <h1>Website Head 1</h1>
+        <h2>article head1</h2>
+        <h2>article head2</h2>
+        <p class="author">author release time</p>
+        <p>
+          This is a very long paragraph, This is a very long paragraph, This is a very long paragraph, This is a very long paragraph, This is a very long paragraph, This is a very long paragraph, This is a very long paragraph,
+          <br />next line
+          <br /> This is a very long paragraph, This is a very long paragraph, This is a very long paragraph, This is a very long paragraph, This is a very long paragraph,next line
+          <br /> This is a very long paragraph, This is a very long paragraph, <a href="ife.baidu.com">this is a link to ife</a>, This is a very long paragraph, This is a very long paragraph, <strong>this is bold</strong>, This is a very long paragraph, This
+          is a very long paragraph, This is a very long paragraph
+        </p>
+        <img src="https://goo.gl/SYz7f7" alt="img1" width="150px">
+      </article>
+
+      <article id="article4">
+        <h2>last article header 1</h2>
+        <p class="author">author publish time</p>
+        <ol>
+          <li>rank1</li>
+          <li>rank2</li>
+          <li>rank3</li>
+        </ol>
+        <p>below is a table, border is 1</p>
+        <table>
+          <colgroup>
+            <col class="first">
+            <col class="second">
+            <col class="third">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>thead</th>
+              <th>thead</th>
+              <th>thead</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>table data</td>
+              <td>table data</td>
+              <td><a href="#">action</td>
+        </tr>
+        <tr>
+          <td>table data</td>
+          <td>table data</td>
+          <td><a href="#">action</td>
+        </tr>
+        <tr>
+          <td>table data</td>
+          <td>table data</td>
+          <td><a href="#">action</td>
+        </tr>
+        <tr>
+          <td>table data</td>
+          <td>table data</td>
+          <td><a href="#">action</a></td>
+            </tr>
+            <tr class="sum">
+              <td>sum</td>
+              <td colspan="2">10000</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+
+    </div>
+  </div>
+
+  <footer>license belong to rainyleo</footer>
+
+</body>
+
+</html>

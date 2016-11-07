@@ -1,0 +1,104 @@
+<!-- 任务描述
+
+参考示例图，在页面中展现一颗二叉树的结构
+提供一个按钮，显示开始遍历，点击后，以动画的形式呈现遍历的过程
+二叉树的遍历算法和方式自定，前序中序后序皆可，但推荐可以提供多种算法的展示（增加多个按钮，每个按钮对应不同的算法）
+当前被遍历到的节点做一个特殊显示（比如不同的颜色）
+每隔一段时间（500ms，1s等时间自定）再遍历下一个节点 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>task25</title>
+  <style>
+
+    div {
+      box-sizing: border-box;
+      border: 1px solid #000;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-around;
+      align-items: center;
+      background: #eee;
+    }
+
+    .first {
+      width: 900px;
+      height: 210px;
+      margin: 20px auto;
+    }
+    .second {
+      width: 430px;
+      height: 180px;
+    }
+    .third {
+      width: 195px;
+      height: 150px;
+    }
+    .fourth {
+      width: 76px;
+      height: 110px;
+    }
+    .active {
+      background: #00f;
+    }
+
+    .btn {
+      width: 350px;
+      text-align: center;
+      margin: 30px auto;
+    }
+
+    button {
+      margin-left: 18px;
+      font-size: 1.1em;
+      color: #fff;
+      background: #216fb0;
+      padding: 6px;
+      border: none;
+      box-shadow: 3px 2px 2px rgba(0, 0, 0, 0.6);;
+    }
+
+    button:focus, button:active {
+      outline: none;
+      background: #00f;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="first">
+    <div class="second">
+      <div class="third ">
+        <div class="fourth"></div>
+        <div class="fourth"></div>
+      </div>
+      <div class="third">
+        <div class="fourth"></div>
+        <div class="fourth"></div>
+      </div>
+    </div>
+
+    <div class="second">
+      <div class="third">
+        <div class="fourth"></div>
+        <div class="fourth"></div>
+      </div>
+      <div class="third">
+        <div class="fourth"></div>
+        <div class="fourth"></div>
+      </div>
+    </div>
+  </div>
+
+<ul class="btn">
+  <button id="preorder">前序遍历</button>
+  <button id="inorder">中序遍历</button>
+  <button id="postorder">后序遍历</button>
+</ul>
+
+<script src="task22.js"></script>
+</body>
+</html>
