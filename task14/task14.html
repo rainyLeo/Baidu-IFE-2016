@@ -27,8 +27,6 @@ var aqiData = [
 ];
 
 (function () {
-
-
   /*
   任务描述
   参考以下示例代码，页面加载后，将提供的空气质量数据数组，
@@ -39,7 +37,7 @@ var aqiData = [
   将空气质量指数大于60的城市显示到aqi-list的列表中
   */
 
-  let result = aqiData.filter(e => e[1] > 60).sort((a, b) => a[1] < b[1]);
+  let result = aqiData.filter(e => e[1] > 60).sort((a, b) => b[1] - a[1]);
   let ul = document.getElementById('aqi-list');
   let content = ``;
   result.forEach((e, i, a) => {

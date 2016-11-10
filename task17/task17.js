@@ -19,6 +19,7 @@ function getDateStr(dat) {
   d = d < 10 ? '0' + d : d;
   return y + '-' + m + '-' + d;
 }
+
 function randomBuildData(seed) {
   var returnData = {};
   var dat = new Date("2016-01-01");
@@ -33,15 +34,15 @@ function randomBuildData(seed) {
 }
 
 var aqiSourceData = {
-  "北京": randomBuildData(500),
-  "上海": randomBuildData(300),
-  "广州": randomBuildData(200),
-  "深圳": randomBuildData(100),
-  "成都": randomBuildData(300),
-  "西安": randomBuildData(500),
-  "福州": randomBuildData(100),
-  "厦门": randomBuildData(100),
-  "沈阳": randomBuildData(500)
+  北京: randomBuildData(500),
+  上海: randomBuildData(300),
+  广州: randomBuildData(200),
+  深圳: randomBuildData(100),
+  成都: randomBuildData(300),
+  西安: randomBuildData(500),
+  福州: randomBuildData(100),
+  厦门: randomBuildData(100),
+  沈阳: randomBuildData(500)
 };
 
 // 用于渲染图表的数据
@@ -51,8 +52,7 @@ var chartData = {};
 var pageState = {
   nowSelectCity: '北京',
   nowGraTime: "day"
-}
-
+};
 
 function getTitle() {
   switch (pageState.nowGraTime) {
@@ -61,7 +61,7 @@ function getTitle() {
     case 'week':
       return '每周平均';
     case 'month':
-      return '每月平均'
+      return '每月平均';
   }
 }
 
@@ -155,6 +155,7 @@ function citySelectChange(option) {
   // 确定是否选项发生了变化
   let citySelect = option.text;
   console.log('cicySelect', citySelect);
+  console.log('citySelect', option.value);
   pageState.nowSelectCity = citySelect;
 
   // 设置对应数据
@@ -222,7 +223,7 @@ function hover(arr) {
     if (event.target.className === 'container') {
       alert(arr[event.target.getAttribute('value')].toFixed(1));
     }
-  }
+  };
 }
 /**
  * 初始化函数

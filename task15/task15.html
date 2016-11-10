@@ -52,7 +52,7 @@ function getData() {
   let data = [];
 
   for (let i = 0, length = source.length; i < length; i++) {
-    text.push(source[i]['innerText']);
+    text.push(source[i].textContent);
   }
   text.forEach(e => data.push([e.slice(0, 2), e.slice(-2)]));
 
@@ -65,7 +65,7 @@ function getData() {
  * 返回一个排序后的数组
  */
 function sortAqiData(data) {
-  data.sort((a, b) => a[1] > b[1]);
+  data.sort((a, b) => a[1] - b[1]);
   return data;
 }
 
@@ -93,7 +93,7 @@ function btnHandle() {
 // 在这下面给按钮sort-btn绑定一个点击事件，点击时触发btnHandle函数
 function init() {
   let btn = document.getElementById('sort-btn');
-  btn.onclick = btnHandle;
+  btn.addEventListener('click', btnHandle, false);
 }
 
 init();

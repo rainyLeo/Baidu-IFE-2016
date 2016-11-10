@@ -31,15 +31,13 @@
   var btn = document.getElementById('button');
 
   btn.onclick = function(){
-    var value = parseFloat(input.value, 10);
+    var value = parseFloat(input.value);
     if (0 < value && value < 1000 ) {
       display.textContent = value;
     } else {
       alert("enter a number 0 ~ 1000")
     }
   }
-
-
 })();
 
 </script>

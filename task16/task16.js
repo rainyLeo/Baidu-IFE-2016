@@ -16,7 +16,7 @@ var aqiData = {
  */
 function addAqiData() {
   let city = document.getElementById('aqi-city-input').value.trim();
-  let value = parseInt(document.getElementById('aqi-value-input').value.trim());
+  let value = parseInt(document.getElementById('aqi-value-input').value.trim(), 10);
   let cityCheck = /^[a-zA-Z\u4E00-\u9FA5]{2,}$/;
 
   if (!cityCheck.test(city)) {
@@ -24,24 +24,28 @@ function addAqiData() {
   } else if (!Number.isInteger(value) || value < 0 || value > 200) {
     alert('Please enter a integer between 0 ~ 200');
   } else {
-    aqiData[city] = parseInt(value, 10);
+    aqiData[city] = value;
+    document.getElementById('aqi-city-input').value = '';
+    document.getElementById('aqi-value-input').value = '';
   }
- console.log(aqiData);
+  
 }
 /**
  * 渲染aqi-table表格
  */
 function renderAqiList() {
   let table = document.getElementById('aqi-table');
-
-  if (Object.keys(aqiData).length !== 0) {
+  let keys = Object.keys(aqiData);
+  let len = keys.length;
+  
+  if (len !== 0) {
     let content = `<tr><td>城市</td><td>空气质量</td><td>操作</td></tr>`;
 
-    for (let city in aqiData) {
+    for (let i = 0; i < len; i++) {
       content += `<tr>
-                    <td>${city}</td>
-                    <td>${aqiData[city]}</td>
-                    <td><button id='delete' name=${city}>删除</button></td>
+                    <td>${keys[i]}</td>
+                    <td>${aqiData[keys[i]]}</td>
+                    <td><button id='delete' name=${keys[i]}>删除</button></td>
                   </tr>`;
     }
     table.innerHTML = content;
@@ -64,7 +68,7 @@ function addBtnHandle() {
  * 获取哪个城市数据被删，删除数据，更新表格显示
  */
 function delBtnHandle(event) {
-  delete aqiData[event.target.name]
+  delete aqiData[event.target.name];
   renderAqiList();
 }
 
@@ -72,15 +76,15 @@ function init() {
 
   // 在这下面给add-btn绑定一个点击事件，点击时触发addBtnHandle函数
   let addBtn = document.getElementById('add-btn');
-  addBtn.onclick = addBtnHandle;
+  addBtn.addEventListener('click', addBtnHandle, false);
 
-  // 想办法给aqi-table中的所有删除按钮绑定事件，触发delBtnHandle函数
+  // 想办法给aqi-table中的所有删除按钮绑定事件，触发delBtnHandle函数, 事件委托
   let table = document.getElementById('aqi-table');
-  table.onclick = function (event) {
-    if (event.target.nodeName === 'BUTTON') {
+  table.addEventListener('click', function(event) {
+    if (event.target.id === 'delete') {
       delBtnHandle(event);
     }
-  };
+  }, false);
 
 }
 
